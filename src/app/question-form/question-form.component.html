@@ -1,0 +1,34 @@
+<form (ngSubmit)="onSubmit(questionForm)" #questionForm="ngForm">
+	<mat-form-field>
+		<input
+		matInput
+		placeholder="Titulo"
+		name="title" 
+		ngModel>
+	</mat-form-field>
+	<mat-form-field>
+		<input
+		matInput
+		placeholder="Descripcion"
+		name="description" 
+		ngModel>
+	</mat-form-field>
+	<mat-grid-list cols="3" rowHeight="3:2">
+		<mat-grid-tile>
+			<mat-radio-group ngModel name="icon">
+				<mat-radio-button value="none"><span class="myclase">
+					<i mat-list-icon class="material-icons">help</i>
+					<small>Sin icono</small></span>
+				</mat-radio-button>
+			</mat-radio-group>
+		</mat-grid-tile>
+		<mat-grid-tile *ngFor="let icon of icons">
+			<mat-radio-group ngModel name="icon">
+				<mat-radio-button value="devicon devicon-{{icon.name}}-{{getIconVersion(icon)}}">
+					<i  mat-list-icon class=" devicon devicon-{{icon.name}}-{{getIconVersion(icon)}} colored"></i>
+				</mat-radio-button>
+			</mat-radio-group>
+		</mat-grid-tile>
+	</mat-grid-list>
+	<button type="submit" mat-raised-button color="accent">Enviar Pregunta</button>
+</form>

@@ -1,0 +1,11 @@
+<p>
+  child 
+</p>
+
+<div *ngIf="mytitle.title || mytitle.body">
+	<p>{{mytitle.title}}</p>
+	<p>{{mytitle.body}}</p>
+</div>
+<div *ngIf="!mytitle.title && !mytitle.body">
+	<p>{{mytitle}}</p>
+</div>

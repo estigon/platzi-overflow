@@ -1,0 +1,20 @@
+mat-icon{
+	font-size: 48px !important;
+    padding: 0px !important;
+    width: 48px !important;
+    height: 48px !important;
+}
+mat-spinner{
+    margin: 0 auto;
+    margin-top: 171px;
+}
+.mat-fab{
+    position: fixed;
+    bottom: 45px;
+    right: 27px;
+}
+i{
+    font-size: 30px;
+    padding: 6px;
+    padding-right: 11px;
+}

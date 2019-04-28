@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span routerLink="">Platzi OverFlow</span>
+    <span class="spacer"></span>
+    <!-- <mat-icon *ngIf="!auth.isLoggedIn()" routerLink="signin" class="account_circle">account_circle</mat-icon>
+    <mat-icon *ngIf="auth.isLoggedIn()" (click)="logOut()" class="remove_circle">remove_circle</mat-icon> -->
+    <button mat-icon-button *ngIf="!auth.isLoggedIn()"><i routerLink="signin" class="material-icons icon_size">account_circle</i></button>
+    <button mat-icon-button *ngIf="auth.isLoggedIn()"><i (click)="logOut()" class="material-icons icon_size">remove_circle</i></button>
+  </mat-toolbar-row>
+</mat-toolbar>
+<!-- <app-question-detail></app-question-detail> -->
+<!-- <app-signin-screen></app-signin-screen> -->
+<!-- <app-question-form></app-question-form> -->
+<router-outlet></router-outlet>

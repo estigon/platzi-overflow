@@ -1,0 +1,49 @@
+.icon {
+    font-size: 30px;
+}
+
+h2 {
+    margin: 0;
+}
+
+.answers {
+    padding: 12px;
+}
+
+.answers-list {
+    padding: 0;
+    list-style: none;
+    padding-bottom: 160px;
+}
+
+h5 {
+    margin-bottom: 0;
+}
+
+h5 small {
+    font-weight: normal;
+    font-size: smaller;
+    color: rgba(0, 0, 0, .54);
+}
+
+.description {
+    border-left: 2px solid #eee;
+    padding-left: 6px;
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.answer-form{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border-top: 1px solid gray;
+    z-index: 2;
+    background-color: white;
+}
+
+mat-spinner{
+    margin: 0 auto;
+    margin-top: 171px;
+}
