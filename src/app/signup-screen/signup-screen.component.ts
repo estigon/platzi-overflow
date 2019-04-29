@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { User } from './../signin-screen/user-model';
+import { AuthService } from '../auth.service';
+import { LocalService } from '../local.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup-screen',
@@ -11,7 +14,11 @@ export class SignupScreenComponent implements OnInit {
 
 	private signupForm: FormGroup;
 
-  constructor() { }
+  constructor(
+		private auth: AuthService,
+		private localService: LocalService,
+		private router: Router
+	) { }
 
   ngOnInit() {
   	this.signupForm = new FormGroup({
@@ -26,10 +33,22 @@ export class SignupScreenComponent implements OnInit {
   	if(this.signupForm.valid){
   		const {email, password, firstname, lastname} = this.signupForm.value;
   		const user = new User(email, password, firstname, lastname);
-  		console.log(user);
+			console.log(user);
+			this.auth.signup( user ).subscribe(
+				result => {
+					this.login(result)
+				}, error => {
+					console.log(error);
+				}
+			);
   	}
   }
 
-  
+	login(data){
+		this.localService.setData("email", data.email);
+		this.localService.setData("token", data.token);
+		this.localService.setData("userId", data.userId);
+		this.router.navigateByUrl('/');
+	}
 
 }

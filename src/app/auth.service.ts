@@ -25,6 +25,12 @@ export class AuthService {
     return this.http.post( urljoin(this.usersUrl, 'signin'), body, { headers });
   }
 
+  signup(user: User){
+    const body = JSON.stringify(user);
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.post( urljoin(this.usersUrl, 'signup'), body, { headers }); 
+  }
+
   isLoggedIn(): boolean {
     return this.localService.getData("token") !== null;
   }
