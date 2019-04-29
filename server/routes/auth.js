@@ -52,6 +52,34 @@ app.post('/signin', (req, res, next) => {
     });
 });
 
+app.post('/signup', (req, res, next) => {
+    if(req.body){
+        const data = req.body;
+        if(!findUserByEmail(data.email)){
+            const user = {
+                email: data.email,
+                password: data.password,
+                firstName: data.firstname,
+                lastName: data.lastname,
+                _id: Date.now()
+            }
+            users.push(user);
+            const token = jwt.sign({ user }, secret, { expiresIn: 86400 });
+            res.status(201).json({
+                message: "Login success",
+                token,
+                userId: user._id,
+                userName: user.firstName,
+                email: user.email
+            });
+        }else{
+            return handleLoginFailed(res);
+        }
+    }else{
+        return handleLoginFailed(res);
+    }
+});
+
 function handleLoginFailed(res){
     return res.status(401).json({
         message: "login failed",
