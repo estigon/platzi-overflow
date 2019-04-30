@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { QuestionModel } from './../questions/question-detail/question-model';
 import { QuestionsService } from './../questions/questions.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-question-list',
@@ -13,7 +14,10 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   loading: boolean;
 
-  constructor(private questionsService: QuestionsService) { }
+  constructor(
+    private questionsService: QuestionsService,
+    private auth: AuthService
+  ) { }
 
   ngOnInit() {
     this.loading = true;
@@ -21,11 +25,6 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   }
 
   getQuestions(){
-   /*  this.questionsService.getQuestions()
-          .then((response: any) => {
-              this.questions = response;
-              console.log(response);
-          }); */
           this.subscription = this.questionsService.getQuestions().subscribe(
             result =>{
               console.log(result);

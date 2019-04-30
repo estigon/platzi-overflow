@@ -19,6 +19,7 @@ import { ChildComponent } from './child/child.component';
 import { SignupScreenComponent } from './signup-screen/signup-screen.component';
 import { QuestionListComponent } from './question-list/question-list.component';
 import { QuestionFormComponent } from './question-form/question-form.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -43,7 +44,8 @@ import { QuestionFormComponent } from './question-form/question-form.component';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

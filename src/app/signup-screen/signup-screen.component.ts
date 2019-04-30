@@ -39,6 +39,7 @@ export class SignupScreenComponent implements OnInit {
 					this.login(result)
 				}, error => {
 					console.log(error);
+					this.auth.handleError(error.error.error);
 				}
 			);
   	}
