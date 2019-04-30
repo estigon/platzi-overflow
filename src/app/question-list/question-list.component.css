@@ -13,8 +13,8 @@ mat-spinner{
     bottom: 45px;
     right: 27px;
 }
-i{
-    font-size: 30px;
-    padding: 6px;
-    padding-right: 11px;
+.myicon{
+    font-size: 29px !important;
+    height: 31px !important;
+    width: 31px !important;
 }

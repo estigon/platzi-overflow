@@ -4,6 +4,7 @@ import { QuestionModel } from '../questions/question-detail/question-model';
 import {default as icons} from './icons';
 import { QuestionsService } from '../questions/questions.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-question-form',
@@ -15,7 +16,8 @@ export class QuestionFormComponent implements OnInit, OnDestroy {
 	private sub: Subscription;
 
   constructor(
-		private questionService: QuestionsService
+		private questionService: QuestionsService,
+		private authService: AuthService
 	) { }
 
   ngOnInit() {
@@ -40,6 +42,7 @@ export class QuestionFormComponent implements OnInit, OnDestroy {
 				console.log(result);
 			}, error => {
 				console.log(<any>error);
+				this.authService.handleError(error.error.error)
 			}
 		);
 	}

@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'
 import { User } from './signin-screen/user-model';
 import urljoin from 'url-join';
 import { LocalService } from './local.service';
+import { MatSnackBar } from '@angular/material';
 
 
 @Injectable({
@@ -14,7 +15,8 @@ export class AuthService {
 
   constructor(
     private http : HttpClient,
-    private localService: LocalService
+    private localService: LocalService,
+    private snackBar: MatSnackBar
   ) {
     this.usersUrl = urljoin( environment.apiUrl, 'auth');
   }
@@ -38,5 +40,9 @@ export class AuthService {
   logOut(){
     this.localService.clearData();
     console.log("borrado el token del local storage");
+  }
+
+  handleError(msg: any) {
+    this.snackBar.open(msg, 'x', { duration: 2500 });
   }
 }

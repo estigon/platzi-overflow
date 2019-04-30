@@ -1,33 +1,11 @@
 import express from 'express';
-import Debug from 'debug';
+import debug from 'debug';
 import { find } from 'tslint/lib/utils';
 import jwt from 'jsonwebtoken';
+import { secret } from '../config';
+import { users, findUserByEmail, ComparePasswords } from '../middleware';
 const app = express.Router();
-const debug = new Debug('platzi-overflow:auth');
 
-const users = [
-    {
-        firstName: 'Elys',
-        lastName:'Gonzalez',
-        email: 'elysestiben@gmail.com',
-        password: '1234567',
-        _id: 12345
-    }
-];
-
-const secret = "miclavesecreta";
-
-function findUserByEmail(e){
-    const user = users.find(user => { 
-        return user.email === e;
-    });
-    console.log("user 1", user);
-    return user;
-}
-
-function ComparePasswords(providedPassword, userPassword){
-    return providedPassword === userPassword;
-}
 
 app.post('/signin', (req, res, next) => {
     const { email, password } = req.body;
@@ -83,7 +61,7 @@ app.post('/signup', (req, res, next) => {
 function handleLoginFailed(res){
     return res.status(401).json({
         message: "login failed",
-        Error: "Email and password not match"
+        error: "Email and password not match"
     });
 }
 

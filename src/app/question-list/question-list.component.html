@@ -11,7 +11,10 @@
           </p>
         </mat-list-item>
       </mat-list>
-      <button mat-fab routerLink="/questions/new-question">
-          <i>+</i>
+      <button *ngIf="auth.isLoggedIn()" mat-fab routerLink="/questions/new-question">
+          <mat-icon class="myicon">add</mat-icon>
+      </button>
+      <button *ngIf="!auth.isLoggedIn()" mat-fab routerLink="/signin">
+          <mat-icon class="myicon">add</mat-icon>
       </button>
 </div>

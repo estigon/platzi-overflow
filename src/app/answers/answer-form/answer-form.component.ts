@@ -5,6 +5,8 @@ import { AnswerModel } from './answer-model';
 import { User } from 'src/app/signin-screen/user-model';
 import { QuestionsService } from '../../questions/questions.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-answer-form',
@@ -17,30 +19,39 @@ export class AnswerFormComponent implements OnInit, OnDestroy {
   private sub: Subscription;
 
   constructor(
-    private service: QuestionsService
+    private service: QuestionsService,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(){
   }
 
   onSubmit(form: NgForm){
-    const answer = new AnswerModel(
-      form.value.description,
-      this.question
-    );
-    console.log("respuesta ",answer);
-    this.sub = this.service.addAnswers(answer).subscribe(
-      result => {
-        console.log("my result ",result);
-        this.question.answers.unshift(result);
-      },error => {
-        console.log(<any>error);
-      }
-   );
-    form.reset();
+    if( this.authService.isLoggedIn() ){
+      const answer = new AnswerModel(
+        form.value.description,
+        this.question
+      );
+      console.log("respuesta ",answer);
+      this.sub = this.service.addAnswers(answer).subscribe(
+        result => {
+          console.log("my result ",result);
+          this.question.answers.unshift(result);
+        },error => {
+          console.log(<any>error);
+          this.authService.handleError(error.error.error);
+        }
+     );
+      form.reset();
+    }else {
+      this.router.navigateByUrl('/signin')
+    }
   }
 
   ngOnDestroy(){
-    this.sub.unsubscribe();
+    if(this.sub){
+      this.sub.unsubscribe();
+    }
   }
 }
