@@ -11,7 +11,8 @@ export default {
 
     findById: async (_id) => {
         debug(`finingd question with id ${ _id }`);
-        return await Question.findOne({ _id })
+        return await Question
+            .findOne({ _id })
             .populate('user')
             .populate({
                 path: 'answers',
@@ -20,6 +21,6 @@ export default {
                     path: 'user',
                     models: 'User'
                 }
-            })
+            });
     }
 }
