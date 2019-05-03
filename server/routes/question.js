@@ -4,6 +4,7 @@ import {
     questionsMidleware,
     questionMidleware
  } from '../middleware';
+ import question from '../api-DB/question';
 const app = express.Router();
 
 //esta ruta raiz es la definida en app.js /api/questions
@@ -22,15 +23,24 @@ app.get('/:id', questionMidleware, (req, res) => {
 });
 
 //Post /api/questions
-app.post('/', required, questionsMidleware, (req, res) => {
-    const nq = req.body;console.log(req);
-    nq._id = +new Date();
-    nq.user = req.user;
-    nq.createdAt = new Date();
-    nq.answers = [];
+app.post('/', required, async (req, res) => {
+    const { title, description, icon } = req.body;
+    const nq = {
+        title,
+        description,
+        icon,
+        user: req.user._id
+    }
 
-    req.questions.unshift(nq);
-    res.status(200).send({'data':nq});
+    try { console.log('entro en el try', nq);
+        const savedQuestion = await question.saveQuestion(nq);console.log("savedQuestion", savedQuestion);
+        res.status(201).send({'data':savedQuestion});
+    } catch (error) {
+        res.status(401).json({
+            message: "An error ocurred saving the question",
+            error: error
+        })
+    }
 });
 
 //agregar respuestas

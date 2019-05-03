@@ -22,5 +22,11 @@ export default {
                     models: 'User'
                 }
             });
+    },
+
+    saveQuestion: async (q) => {
+        debug(`saving question  ${ q }`);
+        const questionToDB = new Question(q);
+        return await questionToDB.save();
     }
 }

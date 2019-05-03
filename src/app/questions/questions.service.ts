@@ -33,7 +33,7 @@ export class QuestionsService {
   }
 
   pushQuestion(data:any):Observable<any>{
-    const headers = this.headers;
+    const headers = this.headers;console.log({headers});
     return this.httpClient.post(this.urlBase+'/questions/', data, {headers});
   }
 
