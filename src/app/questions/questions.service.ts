@@ -45,6 +45,7 @@ export class QuestionsService {
     }
 
     console.log("data before send",answer);
+    console.log('this.headers', this.headers);
     return this.httpClient.post(this.urlBase+'/questions/'+id+'/answers', answer, {headers});
   }
 

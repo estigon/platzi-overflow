@@ -24,7 +24,7 @@ export const required = (req, res, next) => {
             debug("JWT was not encrypted with our secret");
             return res.status(401).json({
                 message:"Unauthorized",
-                error: err
+                error: 'No hay token de autenticacion'
             });
         }else {
             debug(`the ${token} is valid`);

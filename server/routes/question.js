@@ -5,6 +5,7 @@ import {
     questionMidleware
  } from '../middleware';
  import question from '../api-DB/question';
+import { Question, Answer } from '../models';
 const app = express.Router();
 
 //esta ruta raiz es la definida en app.js /api/questions
@@ -33,7 +34,8 @@ app.post('/', required, async (req, res) => {
     }
 
     try { console.log('entro en el try', nq);
-        const savedQuestion = await question.saveQuestion(nq);console.log("savedQuestion", savedQuestion);
+        const savedQuestion = await question.saveQuestion(nq);
+        console.log("savedQuestion", savedQuestion);
         res.status(201).send({'data':savedQuestion});
     } catch (error) {
         res.status(401).json({
@@ -44,7 +46,7 @@ app.post('/', required, async (req, res) => {
 });
 
 //agregar respuestas
-app.post('/:id/answers', required, questionMidleware, (req, res) => {
+app.post('/:id/answers', required, questionMidleware, (req, res, next) => {
     if(req.body){
         console.log(req.body);
         const newAnswer = req.body;
@@ -54,13 +56,32 @@ app.post('/:id/answers', required, questionMidleware, (req, res) => {
 
         const myAnswer = {
             description: newAnswer.description,
-            question: q._id,
             createdAt: newAnswer.date,
             user: newAnswer.user
         }
-    
-        q.answers.push(myAnswer);console.log(q);
-        res.status(201).json(myAnswer);
+
+        Answer.create(myAnswer, (err, answ) => {
+            if (err){
+               return res.status(401).json({error: "no se pudo crear la respuesta"});
+            }else{
+                Answer.findOne({"_id": answ._id}, (err, dbansw) => {
+                    if (err){
+                        return res.status(401).json({error: "no existe la respuesta"});
+                     }else{
+                        Question.findByIdAndUpdate( {"_id": q._id}, { $push: { answers: dbansw } }, (err, resp) =>{
+                            if (err){
+                            return res.status(401).json({error: "No se pudo asignar la respuesta a esta pregunta"});
+                            } 
+                            if( resp && resp != undefined && resp != null ){
+                                console.log(resp);
+                                q.answers.push(myAnswer);console.log(dbansw);
+                                res.status(201).json(dbansw);
+                            }
+                        });
+                    }
+                }).populate('user');
+            } 
+        });
     }
 });
 
